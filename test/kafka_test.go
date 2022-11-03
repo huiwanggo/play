@@ -1,4 +1,4 @@
-package log
+package test
 
 import (
 	"context"
@@ -14,7 +14,9 @@ func TestTopic(t *testing.T) {
 	if err != nil {
 		panic(err.Error())
 	}
-	defer conn.Close()
+	defer func(conn *kafka.Conn) {
+		_ = conn.Close()
+	}(conn)
 
 	partitions, err := conn.ReadPartitions()
 	if err != nil {
@@ -64,7 +66,10 @@ func TestRead(t *testing.T) {
 		MinBytes:  10e3, // 10KB
 		MaxBytes:  10e6, // 10MB
 	})
-	r.SetOffset(0)
+	err := r.SetOffset(0)
+	if err != nil {
+		panic(err)
+	}
 
 	for {
 		m, err := r.ReadMessage(context.Background())

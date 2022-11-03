@@ -8,7 +8,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
   kafka:
     image: confluentinc/cp-kafka:7.0.1
-    container_name: broker
+    container_name: kafka
     ports:
       - "19092:19092" # "宿主机:容器"
     depends_on:
