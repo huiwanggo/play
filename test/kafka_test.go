@@ -30,9 +30,10 @@ func TestTopic(t *testing.T) {
 
 func TestWrite(t *testing.T) {
 	w := kafka.Writer{
-		Addr:     kafka.TCP(address),
-		Topic:    "test",
-		Balancer: &kafka.LeastBytes{},
+		Addr:                   kafka.TCP(address),
+		Topic:                  "test",
+		Balancer:               &kafka.LeastBytes{},
+		AllowAutoTopicCreation: true,
 	}
 
 	err := w.WriteMessages(context.Background(),
